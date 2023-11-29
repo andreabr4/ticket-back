@@ -36,3 +36,4 @@ lerna-debug.log*
 src/keys/stripe.ts
 src/keys/mongo.ts
 src/keys/resend.ts
+src/keys/JWT.ts

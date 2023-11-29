@@ -13,7 +13,7 @@ import { LocalStrategy } from './local.auth';
 @Module({
   imports: [UsersModule, PassportModule, JwtModule.register({
     secret: 'secretKey',
-    signOptions: { expiresIn: '60s' },
+    signOptions: { expiresIn: '1300s' },
   }), MongooseModule.forFeature([{ name: "user", schema: UserSchema }])],
   providers: [AuthService, UsersService, LocalStrategy],
   controllers: [AuthController],

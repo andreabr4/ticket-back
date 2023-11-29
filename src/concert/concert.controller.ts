@@ -20,8 +20,6 @@ export class ConcertController {
     return await this.concertService.showConcertGenre(genre);
   }
 
-// ESTO DEVUELVE UN ARRAY. HAY QUE EDITARLO CON REACT.
-
   @Get('genres')
   async getGenres() {
       return await this.concertService.getDistinctGenres();

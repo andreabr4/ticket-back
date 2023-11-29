@@ -30,12 +30,19 @@
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
+    "leaflet": "^1.9.4",
     "mongoose": "^8.0.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "pdfkit": "^0.14.0",
+    "qrcode": "^1.5.3",
+    "react": "^18.2.0",
+    "react-leaflet": "^4.2.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "resend": "^2.0.0",
+    "rxjs": "^7.8.1",
+    "stripe": "^14.5.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

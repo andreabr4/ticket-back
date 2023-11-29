@@ -5,9 +5,6 @@ export class UsersDto {
     @IsString({message:'Name is not a string'})
     @IsNotEmpty({message:'Name is empty'})
     name:string
-
-    @IsString({message:'Username is not a string'})
-    username:string 
     
     @IsString({message: 'Surname is not a string'})
     surname:string

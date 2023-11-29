@@ -16,6 +16,15 @@ export class Place {
   longitude: number;
 }
 
+@Schema()
+export class Description {
+  @Prop({ required: true })
+  en: string;
+  
+  @Prop()
+  es: string; 
+}
+
 export type ConcertDocument = Concert & Document;
 
 
@@ -43,7 +52,16 @@ export class Concert {
   stock: number;
 
   @Prop({ required: true })
-  description: string;
+  description: Description;
+
+  @Prop({ required: true })
+  productID: string;
+
+  @Prop({ required: true })
+  priceID: string;
+
+  @Prop({required:true})
+  spotifyID:string;
 }
 
 export const ConcertSchema = SchemaFactory.createForClass(Concert);

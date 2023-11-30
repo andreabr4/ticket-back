@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConcertModule } from './concert/concert.module';
 import { OrderModule } from './order/order.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { StatusModule } from './status/status.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       {isGlobal:true,
         envFilePath: '.env',
       }  
-  )],
+  ),
+    StatusModule],
   controllers: [AppController],
   providers: [AppService],
 })

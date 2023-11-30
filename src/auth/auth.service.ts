@@ -24,16 +24,19 @@ export class AuthService {
       const payload = { email: user.email, sub: user._id };
 
       return {
+        user_name :user.name,
         access_token: this.jwtService.sign(payload),
       };
     }
 
     throw new NotAcceptableException('could not find the user or the password');
   }
-  async login(user: any) {
-    const payload = { email: user.email, sub: user._id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
+
+  // async login(user: any) {
+  //   const payload = { email: user.email, sub: user._id };
+  //   return {
+
+  //     access_token: this.jwtService.sign(payload),
+  //   };
+  // }
 }

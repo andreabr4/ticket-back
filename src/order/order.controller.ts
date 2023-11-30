@@ -2,12 +2,16 @@ import { Body, Controller, Post, Headers, Req, BadRequestException, UseGuards } 
 import { OrderService } from './order.service';
 import RequestWithRawBody from './requestWithRawBody.interface';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('order')
 @Controller('order')
 export class OrderController {
     constructor(private readonly OrderService: OrderService) {}
 
-    // @UseGuards(AuthGuard('local'))
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @Post('create')
     async createOrder(@Body() order: any) {
       return await this.OrderService.createOrder(order);
@@ -24,4 +28,6 @@ export class OrderController {
    
       return this.OrderService.constructEventFromPayload(signature, request.rawBody);
     }
+
+
 }

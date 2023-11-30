@@ -35,7 +35,7 @@ export class ConcertService {
     newConcert.description = concert.description;
     newConcert.productID=product.id
     newConcert.priceID=price.id,
-    newConcert.spotifyID =concert.spotify
+    newConcert.spotifyID =concert.spotifyID
     
 
     return await this.concertModel.create(newConcert)

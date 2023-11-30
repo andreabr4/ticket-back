@@ -79,6 +79,13 @@ export class OrderService {
         productID: orderCompleted.productID,
       });
 
+      orderConcert.stock
+
+      let stockUpdate = await this.concertModel.updateOne({
+        productID: orderConcert.productID},
+        {stock:(orderConcert.stock - orderCompleted.quantity)}
+        )
+
       const resend = new Resend(resendConstant.secret);
 
       const doc = new PDFDocument();

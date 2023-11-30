@@ -29,6 +29,7 @@ export class UsersService {
             });
             return newUser; 
         } catch (error) {
+            console.log(error)
             throw new BadRequestException('Error al crear el usuario');
         }
     }

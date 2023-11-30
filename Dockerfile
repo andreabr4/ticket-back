@@ -1,5 +1,5 @@
 # Step 1: Use a Node.js base image
-FROM node:16 as builder
+FROM node:latest as builder
 
 # Set the working directory in the Docker container
 WORKDIR /usr/src/app

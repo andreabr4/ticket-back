@@ -5,17 +5,21 @@ import { User, UserDocument } from './users.schema';
 import { UsersDto } from './dto/users.dto/users.dto';
 import { Resend } from 'resend';
 import { EmailTemplate } from 'src/components/Signup';
-import { resendConstant } from 'src/keys/resend';
+import { ConfigService } from '@nestjs/config';
+
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel('user') private readonly userModel: Model<UserDocument>) { }
+    constructor(
+        @InjectModel('user') private readonly userModel: Model<UserDocument>,
+        private configService: ConfigService
+        ) { }
     
     async createUser(user: UsersDto): Promise<User> {
 
         try {
             const newUser = await this.userModel.create(user);
-            const resend = new Resend(resendConstant.secret);
+            const resend = new Resend(this.configService.get<string>('RESEND_API_KEY'));
 
             await resend.emails.send({
                 from: 'onboarding@resend.dev',

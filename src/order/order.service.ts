@@ -9,15 +9,8 @@ import { UserDocument } from 'src/users/users.schema';
 import * as QRCode from 'qrcode';
 import * as PDFDocument from 'pdfkit';
 import * as fs from 'fs';
-import { resendConstant } from 'src/keys/resend';
-import { stripeConsants } from 'src/keys/stripe';
+import { ConfigService } from '@nestjs/config';
 
-const stripe = require('stripe')(
-  stripeConsants.secret,
-);
-
-const endpointSecret =
-  stripeConsants.webhookSecret;
 
 @Injectable()
 export class OrderService {
@@ -25,11 +18,16 @@ export class OrderService {
     @InjectModel('order') private orderModel: Model<OrderDocument>,
     @InjectModel('concert') private concertModel: Model<ConcertDocument>,
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
+    private configService: ConfigService
   ) {}
+ 
 
   async createOrder(order: any) {
+    const stripe = require('stripe')(
+      this.configService.get<string>('STRIPE_API_KEY')
+    );
     const checkout = await stripe.checkout.sessions.create({
-      success_url: stripeConsants.success_url,
+      success_url: this.configService.get<string>('SUCCESS_URL'),
       line_items: [{ price: order.priceID, quantity: order.quantity }],
       customer_email: order.email,
       mode: 'payment',
@@ -51,10 +49,13 @@ export class OrderService {
   }
 
   public async constructEventFromPayload(signature: string, payload: Buffer) {
+    const stripe = require('stripe')(
+      this.configService.get<string>('STRIPE_API_KEY')
+    );
     let upcomingEvent = await stripe.webhooks.constructEvent(
       payload,
       signature,
-      endpointSecret,
+      this.configService.get<string>('WEBHOOK_SECRET'),
     );
 
     if (
@@ -86,7 +87,7 @@ export class OrderService {
         {stock:(orderConcert.stock - orderCompleted.quantity)}
         )
 
-      const resend = new Resend(resendConstant.secret);
+      const resend = new Resend(this.configService.get<string>('RESEND_API_KEY'));
 
       const doc = new PDFDocument();
       const buffers: Buffer[] = [];
@@ -148,8 +149,6 @@ export class OrderService {
           ],
         });
       });
-
-      console.log(upcomingEvent);
     }
 
     return;

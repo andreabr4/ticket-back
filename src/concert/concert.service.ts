@@ -2,18 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Concert, ConcertDocument } from './concert.schema';
-import { stripeConsants } from 'src/keys/stripe';
-const stripe = require('stripe')(
-  stripeConsants.secret,
-);
-// EL APIKEY NO TIENE QUE IR AQUI
+import { ConfigService } from '@nestjs/config';
+
 
 @Injectable()
 export class ConcertService {
   constructor(
     @InjectModel('concert') private concertModel: Model<ConcertDocument>,
+    private configService: ConfigService
   ) {}
   async createConcert(concert: any) {
+    const stripe = require('stripe')(
+      this.configService.get<string>('STRIPE_API_KEY')
+    );
     const product = await stripe.products.create({
       name: concert.musician + " - " + concert.place.city + " | " + concert.date.toLocaleString()
     });

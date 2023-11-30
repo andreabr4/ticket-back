@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Step 2: Use a smaller base image for the production build
-FROM node:16-alpine
+FROM node:latest
 
 # Set the working directory in the Docker container
 WORKDIR /usr/src/app

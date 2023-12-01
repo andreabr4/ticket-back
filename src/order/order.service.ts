@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 
 
+
 @Injectable()
 export class OrderService {
   constructor(
@@ -93,7 +94,8 @@ export class OrderService {
       const buffers: Buffer[] = [];
 
       doc.on('data', (buffer) => buffers.push(buffer));
-      const logoPath = './src/components/logoBlack.png';
+      const logoPath= '../components/logoBlack.png'
+      // const logoPath = './src/components/logoBlack.png';
       const logoSize = { width: 100 };
       const qrSize = { width: 100, height: 100 };
 
@@ -121,7 +123,7 @@ export class OrderService {
         doc.fontSize(12).text(text, { align: 'center' });
       });
 
-      // Generate QR Code
+      
       const qrCodeDataURL = await QRCode.toDataURL(orderCompleted.checkoutSessionID, {
         errorCorrectionLevel: 'H',
       });
@@ -131,7 +133,7 @@ export class OrderService {
 
       doc.on('end', () => {
         const pdfData = Buffer.concat(buffers);
-        // Optionally, save to a file to check
+       
 
         resend.emails.send({
           from: 'onboarding@resend.dev',

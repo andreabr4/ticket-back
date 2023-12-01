@@ -36,6 +36,6 @@ export const EmailTemplatePurchase: React.FC<Readonly<EmailTemplateProps>> = ({
     </p>
     <br></br>
 
-    <a href="http://localhost:5713/login"></a>
+    <a href="https://cool-klepon-45dc29.netlify.app/"></a>
   </div>
 );
